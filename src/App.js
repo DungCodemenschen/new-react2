@@ -172,15 +172,12 @@ const App = () => {
           z-index: 1;
         }
       }
-      .css-7no60z-ButtonBase {
-        // background-color: #f00;
-        display: flex;
-        .sc-gsDKAQ {
-          position: absolute;
-          right: -2px;
-          z-index: 1;
-        }
+      .sc-gsDKAQ {
+        position: absolute;
+        right: -2px;
+        z-index: 1;
       }
+      
       
       ${p => p.isCompleted && css`
           text-decoration: line-through;
@@ -310,6 +307,7 @@ const App = () => {
                         }}
                       >
                         <ButtonStyled shouldFitContainer
+                            className='buttonstyled'
                             isCompleted={item.isCompleted}
                             isEdited={item.isEdited}
                             iconBefore={
@@ -330,7 +328,7 @@ const App = () => {
                                 </div>
                             }
                         >
-                          <DragHandle {...provided.dragHandleProps} />
+                          <DragHandle className='draghandle-icon' {...provided.dragHandleProps} />
                           <span>{item.name}</span>
                         </ButtonStyled>
                       </ListItem>
