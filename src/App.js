@@ -225,7 +225,6 @@ const App = () => {
   const mystyle = `
     #root .btn-group {
       margin-bottom: 20px;
-      float: right;
       text-align: center;
     }
   `;
