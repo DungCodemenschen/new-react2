@@ -55,6 +55,7 @@
 #root .btn-group {
   margin-bottom: 20px;
   float: right;
+  text-align: center;
 }
 #root .btn-group2 {
   clear: both;

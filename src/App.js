@@ -222,8 +222,16 @@ const App = () => {
           `}
       }
   `;
+  const mystyle = `
+    #root .btn-group {
+      margin-bottom: 20px;
+      float: right;
+      text-align: center;
+    }
+  `;
   return (
     <div className="">
+      <style>{mystyle}</style>
       <DragDropContext
         onDragEnd={(param) => {
           const srcI = param.source.index;
