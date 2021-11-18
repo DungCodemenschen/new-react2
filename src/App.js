@@ -222,58 +222,8 @@ const App = () => {
           `}
       }
   `;
-  const mycss = `
-  #root .btn-add {
-    display: contents;
-  }
-  #root {
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    background: #fff;
-    padding: 35px;
-    padding: 3.5rem;
-  }
-  #root .todoList-wrap {
-    min-height: 200px;
-    border: #00324A 2px solid;
-    padding: 4px 4px 30px 4px;
-  }
-  #root .btn-group {
-    margin-bottom: 20px;
-    float: right;
-  }
-  #root .btn-group2 {
-    clear: both;
-  }
-  #root .btn-group2 .btn-add-cat {
-    font-family: "Mulish",sans-serif;
-    color: #fff;
-    padding: 15px 35px;
-    display: inline-block;
-    font-size: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: bold;
-    text-decoration: none;
-    cursor: pointer;
-    margin-bottom: 20px;
-    line-height: 1.1;
-    transition: 0.8s;
-    text-align: center;
-    width: auto;
-    opacity: 1.0;
-  }
-  #root .btn-group .btn-add-cat {
-    background-color: transparent;
-  }
-  .btn-group .btn-add-cat svg {
-    vertical-align: middle;
-  }`;
   return (
     <div className="">
-      
-    <style>{mycss}</style>
       <DragDropContext
         onDragEnd={(param) => {
           const srcI = param.source.index;
