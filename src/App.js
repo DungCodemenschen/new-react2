@@ -66,7 +66,7 @@ const onInputStartEditor = useCallback((id) => {
 
 const onTaskChange = useCallback((id, name) => {
     setTodoList(prevState => prevState.map(todo => todo.id === id ? {...todo,  name: name } : todo))
-});
+}, []);
   const ButtonStyled = styled(Button)
   `
       
@@ -114,7 +114,7 @@ const onTaskChange = useCallback((id, name) => {
           display: inline-block;
           cursor: pointer;
           margin-top: 6px;
-          background-color: #00f;
+          background-color: #60B987;
           border-radius: 50%;
           width: 25px;
           height: 25px;
@@ -240,7 +240,9 @@ const onTaskChange = useCallback((id, name) => {
   }
   #root .btn-group {
     margin-bottom: 20px;
-    text-align: center;
+    text-align: right;
+    margin-top: -20px;
+    padding-right: 50px;
   }
   #root .btn-group2 {
     clear: both;
@@ -269,6 +271,29 @@ const onTaskChange = useCallback((id, name) => {
   #root div[data-rbd-droppable-id="droppable-1"] {
     border: #00324A 2px solid;
     padding: 4px 4px 30px 4px;
+  }
+  #root .btn-save {
+    font-family: "Mulish",sans-serif;
+    color: #fff;
+    background: #00324A;
+    border: 1px solid #00324A;
+    border-radius: 0;
+    padding: 0 35px;
+    height: 45px;
+    display: inline-block;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+    margin-top: 40px;
+    line-height: 45px;
+    transition: 0.8s;
+    text-align: center;
+    width: auto;
+    opacity: 1.0;
   }
   `;
   return (
@@ -371,26 +396,26 @@ const onTaskChange = useCallback((id, name) => {
               </div>
             )}
           </Droppable>
-        </ListContainer>
-      </DragDropContext>
-      
       <div className="btn-group">
         <Button
             className="btn-add-cat"
             onClick = { onAddCatBtnClick } >
-            <AddCircleIcon size='xlarge' primaryColor='#0ff' />
+            <AddCircleIcon size='medium' primaryColor='#60B987' />
             NEUE ÜBERSCHRIFT
         </Button>
         <Button
             className="btn-add"
             onClick = { onAddBtnClick } >
-            <AddCircleIcon size='xlarge' primaryColor='#00f' />
+            <AddCircleIcon size='xlarge' primaryColor='#60B987' />
         </Button>
       </div>
       
       <div className="btn-group2">
-          <Button appearance="primary" className="btn-add-cat" >Checkliste speichern</Button>
-        </div>
+          <Button appearance="primary" className="btn-save" >Checkliste speichern</Button>
+      </div>
+        </ListContainer>
+      </DragDropContext>
+      
     </div>
   );
 };

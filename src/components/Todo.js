@@ -152,7 +152,7 @@ export default function Todo({ todo, onCheckBtnClick, onInputComlpeted, onTaskCh
                 isCompleted={todo.isCompleted}
                 isEdited={todo.isEdited}
                 iconBefore={
-                        todo.isTypeTtem && (
+                        todo.isTypeItem && (
                             <span className='check-icon' onClick={() => onCheckBtnClick(todo.id)}>
                                 <CheckIcon />
                             </span>     
@@ -171,7 +171,7 @@ export default function Todo({ todo, onCheckBtnClick, onInputComlpeted, onTaskCh
             >
                 <div
                 className={
-                    !todo.isTypeTtem ? (
+                    !todo.isTypeItem ? (
                         'textedit category'
                     ) :
                     (
@@ -194,7 +194,7 @@ export default function Todo({ todo, onCheckBtnClick, onInputComlpeted, onTaskCh
                 
                 <span 
                 className={
-                    !todo.isTypeTtem ? (
+                    !todo.isTypeItem ? (
                         'textview category'
                     ) :
                      (
