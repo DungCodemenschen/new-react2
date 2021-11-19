@@ -11,67 +11,62 @@ import AddCircleIcon from '@atlaskit/icon/glyph/add-circle';
 import { DragHandle } from "./components/DragHandle";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { v4 } from 'uuid';
+import Textfield from '@atlaskit/textfield';
 import Button from '@atlaskit/button/standard-button';
+import EditorDoneIcon from '@atlaskit/icon/glyph/editor/done';
 const TODO_APP_STORAGE_KEY = 'TODO_APP';
 
 
 const App = () => {
   const [todoList, setTodoList] = useState([]);
   var storagedTodoList = localStorage.getItem(TODO_APP_STORAGE_KEY);
-  // var list2 = JSON.parse(storagedTodoList);
-  var list2 = [
-    {
-        "id": "c56a038f-91bc-4ecf-98b0-17c6a26de9bd",
-        "isTypeTtem": false,
-        "name": "Agape",
-        "isCompleted": false,
-        "isEdited": true
-    },
-    {
-        "id": "ca377308-82d0-4e44-bccb-19c555db45c4",
-        "isTypeTtem": true,
-        "name": "Wein",
-        "isCompleted": false,
-        "isEdited": true
-    },
-    {
-        "id": "9a5a7f0b-a2ee-45c8-9c84-70f435ac1a82",
-        "isTypeTtem": true,
-        "name": "Speisen",
-        "isCompleted": false,
-        "isEdited": true
-    },
-    {
-        "id": "96d74b58-af88-4f08-af45-601b927e448d",
-        "isTypeTtem": true,
-        "name": "Kellner oder Freunde die ausschenken",
-        "isCompleted": false,
-        "isEdited": true
-    },
-    {
-        "id": "21db0133-1e37-4180-91a4-56815f4887f9",
-        "isTypeTtem": true,
-        "name": "eventuell Luftballone",
-        "isCompleted": false,
-        "isEdited": true
-    },
-    {
-        "id": "985fc6b5-8294-453a-9a9d-2c6b3b93499c",
-        "isTypeTtem": true,
-        "name": "Seifenblasen oder ähnliches für den Auszug aus der Kirche",
-        "isCompleted": false,
-        "isEdited": true
-    }
-]
-  console.log(list2);
+  var list2 = JSON.parse(storagedTodoList);
+  console.log(todoList);
 
+  useEffect(() => {
+    // let storagedTodoList = localStorage.getItem(TODO_APP_STORAGE_KEY);
+  // const storagedTodoList = '';
+    if(storagedTodoList) {
+      setTodoList(JSON.parse(storagedTodoList));
+    }
+  }, []);
+   
+  useEffect(() => {
+    localStorage.setItem(TODO_APP_STORAGE_KEY, JSON.stringify(todoList));
+  }, [todoList]);
   
   const onAddBtnClick = useCallback((e) => {
-      setTodoList([...todoList, { id: v4(), isTypeTtem: true, name: '', isCompleted: false, isEdited: false }]);
-  }, [todoList]);
-  const onAddCatBtnClick = useCallback((e) => {
-      setTodoList([...todoList, { id: v4(), isTypeTtem: false, name: '', isCompleted: false, isEdited: false }]);
-  }, [todoList]);
+    setTodoList([...todoList, { id: v4(), isTypeTtem: true, name: '', isCompleted: false, isEdited: false }]);
+}, [todoList]);
+const onAddCatBtnClick = useCallback((e) => {
+    setTodoList([...todoList, { id: v4(), isTypeTtem: false, name: '', isCompleted: false, isEdited: false }]);
+}, [todoList]);
+
+const onRemoveBtnClick = useCallback((id) => {
+  todoList.forEach((todo, key) => {
+    if (todo.id === id) {
+      todoList.splice(key, 1);
+      // console.log(todoList);
+    }
+  });
+  setTodoList(prevState => prevState.map(todo => todo));
+}, [todoList]);
+
+
+const onCheckBtnClick = useCallback((id) => {
+    setTodoList(prevState => prevState.map(todo => todo.id === id ? {...todo, isCompleted: (todo.isCompleted ? false : true) } : todo))
+}, []);
+
+const onInputComlpeted = useCallback((id) => {
+    setTodoList(prevState => prevState.map(todo => todo.id === id && todo.name !== '' ? {...todo, isEdited: true } : todo))
+}, []);
+const onInputStartEditor = useCallback((id) => {
+  setTodoList(prevState => prevState.map(todo => todo.id === id ? {...todo, isEdited: false } : todo))
+}, []);
+
+const onTaskChange = useCallback((id, name) => {
+    setTodoList(prevState => prevState.map(todo => todo.id === id ? {...todo,  name: name } : todo))
+});
   const ButtonStyled = styled(Button)
   `
       
@@ -123,6 +118,10 @@ const App = () => {
           border-radius: 50%;
           width: 25px;
           height: 25px;
+          span {
+            vertical-align: baseline;
+          }
+          
       }
       .check-icon {
           position: relative;
@@ -223,10 +222,54 @@ const App = () => {
       }
   `;
   const mystyle = `
-    #root .btn-group {
-      margin-bottom: 20px;
-      text-align: center;
-    }
+  #root .btn-add {
+    display: contents;
+  }
+  #root {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #fff;
+    padding: 35px;
+    padding: 3.5rem;
+  }
+  #root .todoList-wrap {
+    min-height: 200px;
+    border: #00324A 2px solid;
+    padding: 4px 4px 30px 4px;
+  }
+  #root .btn-group {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  #root .btn-group2 {
+    clear: both;
+  }
+  #root .btn-group2 .btn-add-cat {
+    font-family: "Mulish",sans-serif;
+    color: #fff;
+    padding: 15px 35px;
+    display: inline-block;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+    line-height: 1.1;
+    transition: 0.8s;
+    text-align: center;
+    width: auto;
+    opacity: 1.0;
+  }
+  #root .btn-group .btn-add-cat {
+    background-color: transparent;
+  } 
+  #root div[data-rbd-droppable-id="droppable-1"] {
+    border: #00324A 2px solid;
+    padding: 4px 4px 30px 4px;
+  }
   `;
   return (
     <div className="">
@@ -236,7 +279,7 @@ const App = () => {
           const srcI = param.source.index;
           const desI = param.destination?.index;
           if (desI) {
-            list2.splice(desI, 0, list2.splice(srcI, 1)[0]);
+            todoList.splice(desI, 0, todoList.splice(srcI, 1)[0]);
             // List.saveList(list);
           }
         }}
@@ -246,7 +289,7 @@ const App = () => {
           <Droppable droppableId="droppable-1">
             {(provided, _) => (
               <div ref={provided.innerRef} {...provided.droppableProps}>
-                {list2.map((item, i) => (
+                {todoList.map((item, i) => (
                   <Draggable
                     key={item.id}
                     draggableId={"draggable-" + item.id}
@@ -269,14 +312,14 @@ const App = () => {
                             isEdited={item.isEdited}
                             iconBefore={
                               item.isTypeTtem && (
-                                <span className='check-icon'>
+                                <span className='check-icon' onClick={() => onCheckBtnClick(item.id)}>
                                   <CheckIcon />
                                 </span>     
                               )
                             }
                             iconAfter={
                                 <div className='after-icon'>
-                                    <span className='remove-icon'>
+                                    <span className='remove-icon' onClick={() => onRemoveBtnClick(item.id)}>
                                         <EditorCloseIcon primaryColor='#00324A' />
                                     </span>
                                     <span className='move-icon'>
@@ -285,8 +328,40 @@ const App = () => {
                                 </div>
                             }
                         >
-                          <DragHandle className='draghandle-icon' {...provided.dragHandleProps} />
-                          <span>{item.name}</span>
+                          <div
+                            className={
+                                !item.isTypeTtem ? (
+                                    'textedit category'
+                                ) :
+                                (
+                                  'textedit'
+                                )
+                            }
+                            >
+                              <Textfield placeholder = "neue Aufgabe..."
+                              className='list-task'
+                              css = { { padding: '5px 10px' } }
+                              value = { item.name }
+                              onChange = {(e) => onTaskChange(item.id, e.target.value)}
+                              >
+                              </Textfield>
+                              <span className='done-icon' onClick={(e) => onInputComlpeted(item.id)}>
+                                  <EditorDoneIcon primaryColor='#fff' />{item.type }
+                              </span>
+                            </div>
+                            <span 
+                              className={
+                                  !item.isTypeTtem ? (
+                                      'textview category'
+                                  ) :
+                                  (
+                                      'textview'
+                                  )
+                              }
+                              onClick={(e) => onInputStartEditor(item.id)}>
+                              <DragHandle className='draghandle-icon' {...provided.dragHandleProps} />
+                              <span>{item.name}</span>
+                          </span>
                         </ButtonStyled>
                       </ListItem>
                     )}
@@ -312,6 +387,10 @@ const App = () => {
             <AddCircleIcon size='xlarge' primaryColor='#00f' />
         </Button>
       </div>
+      
+      <div className="btn-group2">
+          <Button appearance="primary" className="btn-add-cat" >Checkliste speichern</Button>
+        </div>
     </div>
   );
 };
