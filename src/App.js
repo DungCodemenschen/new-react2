@@ -14,7 +14,7 @@ const App = () => {
   const [todoList, setTodoList] = useState([]);
   var storagedTodoList = localStorage.getItem(TODO_APP_STORAGE_KEY);
   var list2 = JSON.parse(storagedTodoList);
-  console.log(todoList);
+  // console.log(todoList);
 
   useEffect(() => {
     // let storagedTodoList = localStorage.getItem(TODO_APP_STORAGE_KEY);

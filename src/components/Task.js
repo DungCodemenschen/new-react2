@@ -10,6 +10,7 @@ import { ListItem } from "../styles";
 import EditorExpandIcon from '@atlaskit/icon/glyph/editor/expand';
 import EditorCloseIcon from '@atlaskit/icon/glyph/editor/close';
 import Textfield from '@atlaskit/textfield';
+import OutsideAlerter from "./OutsideAlerter";
 // import InlineEdit from '@atlaskit/inline-edit';
 // import useState from 'react';
 
@@ -38,6 +39,10 @@ const ButtonStyled = styled(Button)
             }
         }
     }
+    // .in-task {
+    //     width: calc(100% - 120px);
+    //     position: absolute;
+    // }
     .textedit {
         width: calc(100% - 120px);
         position: absolute;
@@ -243,6 +248,7 @@ export default function Task({ todo, i, onCheckBtnClick, onInputComlpeted, onTas
                         )
                     }
                     >
+                    <OutsideAlerter>
                         <Textfield placeholder = "neue Aufgabe..."
                         className='list-task'
                         css = { { padding: '5px 10px' } }
@@ -250,6 +256,7 @@ export default function Task({ todo, i, onCheckBtnClick, onInputComlpeted, onTas
                         onChange = {(e) => onTaskChange(todo.id, e.target.value)}
                         >
                         </Textfield>
+                    </OutsideAlerter>
                         <span className='done-icon' onClick={(e) => onInputComlpeted(todo.id)}>
                             <EditorDoneIcon primaryColor='#fff' />{todo.type }
                         </span>
